@@ -1,28 +1,59 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <v-app-bar app color="primary" dark>
+      <v-menu v-if="state === 2 || state === 3">
+        <template v-slot:activator="{ on }">
+          <v-btn color="primary lighten-3" v-on="on">
+            Item 1
+          </v-btn>
+        </template>
+      </v-menu>
+
+      <v-menu v-if="state === 2 || state === 3">
+        <template v-slot:activator="{ on }">
+          <v-btn color="primary lighten-1" v-on="on">
+            Item 2
+          </v-btn>
+        </template>
+      </v-menu>
+
+      <v-menu v-if="state === 3">
+        <template v-slot:activator="{ on }">
+          <v-btn color="primary darken-1" v-on="on">
+            Item 3
+          </v-btn>
+        </template>
+      </v-menu>
+
+      <v-menu v-if="state === 1 || state === 2">
+        <template v-slot:activator="{ on }">
+          <v-btn v-on="on">Replacement</v-btn>
+        </template>
+      </v-menu>
+    </v-app-bar>
+
+    <v-btn style="margin-top: 100px" @click="setRandomState">
+      Demonstrate Bug
+    </v-btn>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+  data: () => ({
+    state: 3,
+  }),
+  methods: {
+    setRandomState() {
+      if (this.state === 3) {
+        this.state = 1;
+      } else if (this.state === 1) {
+        this.state = 2;
+      } else {
+        this.state = 3;
+      }
+    },
+  },
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
